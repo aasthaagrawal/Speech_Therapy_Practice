@@ -2,6 +2,7 @@ from gettext import gettext as _
 
 WELCOME_MSG = _("Welcome to Speech Therapy Practice. What do you want to practice today?")
 WELCOME_REMPROMPT_MSG = _("I want to practice sentences with r sound. What do you want to practice today?")
+CREATE_PRACTICE_MSG =  _("Topic selected is {}. Am I correct?")
 WELCOME_BACK_MSG = _(
     "Welcome back. It looks like there is {} day until your {}th birthday.")
 WELCOME_BACK_MSG_plural = _(

@@ -47,9 +47,103 @@ class LaunchRequestHandler(AbstractRequestHandler):
         data = handler_input.attributes_manager.request_attributes["_"]
         speech = data["WELCOME_MSG"]
         reprompt = data["WELCOME_REPROMPT_MSG"]
-
         handler_input.response_builder.speak(speech).ask(reprompt)
         return handler_input.response_builder.response
+
+class CreatePracticeHandler(AbstractRequestHandler):
+
+    #Handler for Capturing the Birthday
+
+    def can_handle(self, handler_input):
+        return is_intent_name("CreatePracticeIntent")(handler_input)
+
+    def handle(self, handler_input):
+        data = handler_input.attributes_manager.request_attributes["_"]
+        slots = handler_input.request_envelope.request.intent.slots
+        topic = slots["topic"].value
+        session_attr = handler_input.attributes_manager.session_attributes
+        session_attr['topic'] = topic
+        speech = data["CREATE_PRACTICE_MSG"].format(topic)
+        handler_input.response_builder.speak(speech)
+        return handler_input.response_builder.response
+
+"""      
+class StartPracticeHandler(AbstractRequestHandler):
+    
+    #Handler for Capturing the Birthday
+    
+    def can_handle(self, handler_input):
+        return is_intent_name("StartPracticeIntent")(handler_input)
+
+    def handle(self, handler_input):
+        data = handler_input.attributes_manager.request_attributes["_"]
+        slots = handler_input.request_envelope.request.intent.slots
+        topic = slots["topic"].value
+        session_attr = handler_input.attributes_manager.session_attributes
+        session_attr['topic'] = topic
+        speech = data["CREATE_PRACTICE_MSG"].format(topic)
+        handler_input.response_builder.speak(speech)
+        return handler_input.response_builder.response
+"""
+        
+        #skill_locale = handler_input.request_envelope.request.locale
+
+        # extract slot values
+        #year = slots["year"].value
+
+        # if the interaction models uses synonyms for the month slot (for example hi-IN) the following logic will return the ID for the value
+        #try: 
+        #    month = slots["month"].resolutions.resolutions_per_authority[0].values[0].value.id
+        #except:
+        # if the above fails, it means that there are no synonyms being used, so retrieve the value for the month in the regular way
+        #    month = slots["month"].value
+
+        #day = slots["day"].value
+
+        # get the month as an integer instead of string
+        #month_as_index = self.monthIndex(month[:3])
+        
+        # save slots into session attributes
+        #session_attr = handler_input.attributes_manager.session_attributes
+        #session_attr['year'] = year
+        #session_attr['month'] = month_as_index
+        #session_attr['day'] = day
+
+        # save session attributes as persistent attributes
+        #handler_input.attributes_manager.persistent_attributes = session_attr
+        #handler_input.attributes_manager.save_persistent_attributes()
+
+        # ensure that the order the arguments is correct (MM/DD/YYYY or DD/MM/YYYY) according to locale
+        #date = self.formatDate(year, month, day, skill_locale)
+
+        #speech = data["REGISTER_BIRTHDAY_MSG"].format(date[0], date[1], date[2])
+        #handler_input.response_builder.speak(speech)
+        #handler_input.response_builder.set_should_end_session(True)
+        
+
+    # function to ensure that the date format corresponds with the locale that is triggering thee skill
+"""
+    def formatDate(self, year, month, day, skill_locale):
+        if skill_locale == 'en-US':
+            # MM/DD/YYYY for USA
+            date = [month, day, year]
+        elif skill_locale == 'ja-JP':
+            # YYYY/MM/DD for Japan
+            date = [year, month, day]
+        else:
+            # DD/MM/YYY for RoW
+            date = [day, month, year]
+        return date
+
+    # function to convert a month name to number, i.e. March as 3, July as 7 and so on
+    def monthIndex(self, month):
+        month_list = list(calendar.month_name)
+        i = 0
+        while i < len(month_list):
+            if (month.lower() in month_list[i].lower()):
+                return i
+            i += 1
+"""
 
 class HasBirthdayLaunchRequestHandler(AbstractRequestHandler):
     """Handler for launch after they have set their birthday"""
@@ -362,6 +456,7 @@ sb = CustomSkillBuilder(persistence_adapter=s3_adapter)
 
 sb.add_request_handler(HasBirthdayLaunchRequestHandler())
 sb.add_request_handler(LaunchRequestHandler())
+sb.add_request_handler(CreatePracticeHandler())
 sb.add_request_handler(BirthdayIntentHandler())
 sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelOrStopIntentHandler())

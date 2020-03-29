@@ -43,6 +43,19 @@
             "{month} {day} {year}",
             "{month} {day}"
           ]
+        },
+        {
+          "name": "CreatePracticeIntent",
+          "slots": [
+            {
+              "name": "topic",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "I will practice {topic}",
+            "I want to practice {topic}"
+          ]
         }
       ],
       "types": []
@@ -82,6 +95,22 @@
               }
             }
           ]
+        },
+        {
+          "name": "CreatePracticeIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "topic",
+              "type": "AMAZON.SearchQuery",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1419484158131.989499861893"
+              }
+            }
+          ]
         }
       ],
       "delegationStrategy": "ALWAYS"
@@ -113,8 +142,21 @@
             "value": "Which year were you born on?"
           }
         ]
+      },
+      {
+        "id": "Elicit.Slot.1419484158131.989499861893",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "What would you like to practice with me today?"
+          },
+          {
+            "type": "PlainText",
+            "value": "What topic do you want to practice today?"
+          }
+        ]
       }
     ]
   },
-  "version": "2"
+  "version": "3"
 }
