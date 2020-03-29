@@ -12,6 +12,7 @@ import locale
 import requests
 import calendar
 import gettext
+from random import randint
 from datetime import datetime
 from pytz import timezone
 from ask_sdk_s3.adapter import S3Adapter
@@ -34,12 +35,16 @@ logger.setLevel(logging.INFO)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+PHRASES = [
+     "My mom drove me to school fifteen minutes late on Tuesday",
+     "The girl wore her hair in two braids tied with two blue bows",
+     "The mouse was so hungry he ran across the kitchen floor without even looking for humans",
+     "The tape got stuck on my lips so I couldn't talk anymore"]
 
 class LaunchRequestHandler(AbstractRequestHandler):
     """
     Handler for Skill Launch
     """
-
     def can_handle(self, handler_input):
         return is_request_type("LaunchRequest")(handler_input)
 
@@ -51,40 +56,45 @@ class LaunchRequestHandler(AbstractRequestHandler):
         return handler_input.response_builder.response
 
 class CreatePracticeHandler(AbstractRequestHandler):
-
+    
     #Handler for Capturing the Birthday
-
+    
     def can_handle(self, handler_input):
         return is_intent_name("CreatePracticeIntent")(handler_input)
-
+    
     def handle(self, handler_input):
         data = handler_input.attributes_manager.request_attributes["_"]
         slots = handler_input.request_envelope.request.intent.slots
         topic = slots["topic"].value
         session_attr = handler_input.attributes_manager.session_attributes
         session_attr['topic'] = topic
-        speech = data["CREATE_PRACTICE_MSG"].format(topic)
-        handler_input.response_builder.speak(speech)
+        
+        speech = "Say start my session to proceed"
+        handler_input.response_builder.speak(speech).ask(speech)
         return handler_input.response_builder.response
 
-"""      
 class StartPracticeHandler(AbstractRequestHandler):
     
     #Handler for Capturing the Birthday
     
     def can_handle(self, handler_input):
         return is_intent_name("StartPracticeIntent")(handler_input)
-
+    
     def handle(self, handler_input):
         data = handler_input.attributes_manager.request_attributes["_"]
-        slots = handler_input.request_envelope.request.intent.slots
-        topic = slots["topic"].value
         session_attr = handler_input.attributes_manager.session_attributes
-        session_attr['topic'] = topic
-        speech = data["CREATE_PRACTICE_MSG"].format(topic)
-        handler_input.response_builder.speak(speech)
+        if "topic" not in session_attr:
+            speech = data["TOPIC_MISSING_MSG"]
+            handler_input.response_builder.speak(speech).ask(speech)
+            return handler_input.response_builder.response
+        
+        topic = session_attr["topic"]
+        phrase_index = randint(0,len(PHRASES)-1)
+        phrase = PHRASES[phrase_index]
+        speech = data["START_PRACTICE_MSG"].format(phrase)
+        handler_input.response_builder.speak(speech).ask(speech)
         return handler_input.response_builder.response
-"""
+
         
         #skill_locale = handler_input.request_envelope.request.locale
 
@@ -457,6 +467,7 @@ sb = CustomSkillBuilder(persistence_adapter=s3_adapter)
 sb.add_request_handler(HasBirthdayLaunchRequestHandler())
 sb.add_request_handler(LaunchRequestHandler())
 sb.add_request_handler(CreatePracticeHandler())
+sb.add_request_handler(StartPracticeHandler())
 sb.add_request_handler(BirthdayIntentHandler())
 sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelOrStopIntentHandler())

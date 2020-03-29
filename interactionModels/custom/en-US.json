@@ -1,7 +1,7 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "speech therapy practice",
+      "invocationName": "speech practice",
       "intents": [
         {
           "name": "AMAZON.CancelIntent",
@@ -55,6 +55,13 @@
           "samples": [
             "I will practice {topic}",
             "I want to practice {topic}"
+          ]
+        },
+        {
+          "name": "StartPracticeIntent",
+          "slots": [],
+          "samples": [
+            "Start my session"
           ]
         }
       ],
@@ -155,8 +162,17 @@
             "value": "What topic do you want to practice today?"
           }
         ]
+      },
+      {
+        "id": "Confirm.Intent.165957286408",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "You said you want to practice {topic} today, right?"
+          }
+        ]
       }
     ]
   },
-  "version": "3"
+  "version": "14"
 }
