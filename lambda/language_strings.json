@@ -2,6 +2,9 @@
     "en": {
             "WELCOME_MSG": "Welcome to Speech Therapy Practice. What do you want to practice today?",
             "WELCOME_REPROMPT_MSG": "I want to practice sentences with r sound. What do you want to practice today?",
+            "CREATE_PRACTICE_MSG": "Topic selected is {}. Am I correct?",
+            "TOPIC_MISSING_MSG": "What do you want to practice today?",
+            "START_PRACTICE_MSG": "Please repeat after me: {}",
             "WELCOME_BACK_MSG": "Welcome back. It looks like there is {} day until your {}th birthday.",
             "WELCOME_BACK_MSG_plural": "Welcome back. It looks like there are {} days until your {}th birthday.",
             "HAPPY_BIRTHDAY_MSG": "Happy {}th birthday!",
