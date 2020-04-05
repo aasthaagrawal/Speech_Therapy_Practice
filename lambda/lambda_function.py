@@ -36,10 +36,10 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 PHRASES = [
-     "My mom drove me to school fifteen minutes late on Tuesday",
-     "The girl wore her hair in two braids tied with two blue bows",
-     "The mouse was so hungry he ran across the kitchen floor without even looking for humans",
-     "The tape got stuck on my lips so I couldn't talk anymore"]
+     "I live in Atlanta",
+     "There is a red parrot on the tree",
+     "My mom drive me to school",
+     "I like my coffee cold"]
 
 class LaunchRequestHandler(AbstractRequestHandler):
     """
@@ -89,13 +89,57 @@ class StartPracticeHandler(AbstractRequestHandler):
             return handler_input.response_builder.response
         
         topic = session_attr["topic"]
-        phrase_index = randint(0,len(PHRASES)-1)
-        phrase = PHRASES[phrase_index]
-        speech = data["START_PRACTICE_MSG"].format(phrase)
+        practice_sentence_index = randint(0,len(PHRASES)-1)
+        practice_sentence = PHRASES[practice_sentence_index]
+        session_attr['practice_sentence'] = practice_sentence
+        speech = data["START_PRACTICE_MSG"].format(practice_sentence)
         handler_input.response_builder.speak(speech).ask(speech)
         return handler_input.response_builder.response
 
+class ValidationHandler(AbstractRequestHandler):
+    
+    #Handler for Capturing the Birthday
+    
+    def can_handle(self, handler_input):
+        return is_intent_name("ValidationIntent")(handler_input)
+    
+    def handle(self, handler_input):
+        data = handler_input.attributes_manager.request_attributes["_"]
+        slots = handler_input.request_envelope.request.intent.slots
+        session_attr = handler_input.attributes_manager.session_attributes
+        user_sentence = slots["sentence"].value
+        practice_sentence = session_attr["practice_sentence"]
         
+        if practice_sentence!=user_sentence:
+            speech = data["VALIDATION_INCORRECT_USER_SENTENCE"].format(user_sentence, practice_sentence)
+            handler_input.response_builder.speak(speech).ask(speech)
+            return handler_input.response_builder.response
+        else:
+            speech = data["VALIDATION_CORRECT_USER_SENTENCE"]
+            handler_input.response_builder.speak(speech).ask(speech)
+            return handler_input.response_builder.response
+"""        
+class QuitContinueHandler(AbstractRequestHandler):
+    
+    #Handler for Capturing the Birthday
+    
+    def can_handle(self, handler_input):
+        return is_intent_name("QuitContinueIntent")(handler_input)
+    
+    def handle(self, handler_input):
+        data = handler_input.attributes_manager.request_attributes["_"]
+        slots = handler_input.request_envelope.request.intent.slots
+        user_response = slots["quit_continue"].value
+        
+        if user_response == "quit":
+            speech = data["VALIDATION_INCORRECT_USER_SENTENCE"].format(practice_sentence)
+            handler_input.response_builder.speak(speech).ask(speech)
+            return handler_input.response_builder.response
+        else:
+            speech = data["VALIDATION_CORRECT_USER_SENTENCE"]
+            handler_input.response_builder.speak(speech).ask(speech)
+            return handler_input.response_builder.response
+"""        
         #skill_locale = handler_input.request_envelope.request.locale
 
         # extract slot values
@@ -468,6 +512,7 @@ sb.add_request_handler(HasBirthdayLaunchRequestHandler())
 sb.add_request_handler(LaunchRequestHandler())
 sb.add_request_handler(CreatePracticeHandler())
 sb.add_request_handler(StartPracticeHandler())
+sb.add_request_handler(ValidationHandler())
 sb.add_request_handler(BirthdayIntentHandler())
 sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelOrStopIntentHandler())
