@@ -36,10 +36,10 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 PHRASES = [
-     "I live in India",
-     "There is a red parrot on the tree.",
-     "My mom drive me to school",
-     "I like my coffee cup"]
+     "i live in india",
+     "read a book",
+     "finish my work",
+     "i like my coffee cup"]
 
 class LaunchRequestHandler(AbstractRequestHandler):
     """
