@@ -63,6 +63,18 @@
           "samples": [
             "Start my session"
           ]
+        },
+        {
+          "name": "ValidationIntent",
+          "slots": [
+            {
+              "name": "sentence",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "Speech {sentence}"
+          ]
         }
       ],
       "types": []
@@ -118,6 +130,20 @@
               }
             }
           ]
+        },
+        {
+          "name": "ValidationIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "sentence",
+              "type": "AMAZON.SearchQuery",
+              "elicitationRequired": false,
+              "confirmationRequired": false,
+              "prompts": {}
+            }
+          ]
         }
       ],
       "delegationStrategy": "ALWAYS"
@@ -171,8 +197,17 @@
             "value": "You said you want to practice {topic} today, right?"
           }
         ]
+      },
+      {
+        "id": "Slot.Validation.605444304776.1462204828846.732210902741",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Please chose either \u0027quit\u0027 or \u0027continue\u0027."
+          }
+        ]
       }
     ]
   },
-  "version": "14"
+  "version": "16"
 }
