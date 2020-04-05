@@ -7,6 +7,7 @@ TOPIC_MISSING_MSG = _("What do you want to practice today?")
 START_PRACTICE_MSG = _("Please say the word 'Speech' and then repeat after me: {}")
 VALIDATION_INCORRECT_USER_SENTENCE = _("Your said {}. Let's try again! Please say the word 'Speech' and then repeat after me: {}")
 VALIDATION_CORRECT_USER_SENTENCE = _("Do you want to quit or continue?")
+QUIT_MESSAGE = _("Quitting the session. Bye!")
 WELCOME_BACK_MSG = _(
     "Welcome back. It looks like there is {} day until your {}th birthday.")
 WELCOME_BACK_MSG_plural = _(
