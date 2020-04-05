@@ -20,31 +20,6 @@
           "samples": []
         },
         {
-          "name": "CaptureBirthdayIntent",
-          "slots": [
-            {
-              "name": "month",
-              "type": "AMAZON.Month"
-            },
-            {
-              "name": "day",
-              "type": "AMAZON.Ordinal"
-            },
-            {
-              "name": "year",
-              "type": "AMAZON.FOUR_DIGIT_NUMBER"
-            }
-          ],
-          "samples": [
-            "I was born in {month} {year}",
-            "I was born on {month} {day} {year}",
-            "I was born on {month} {day}",
-            "{month} {year}",
-            "{month} {day} {year}",
-            "{month} {day}"
-          ]
-        },
-        {
           "name": "CreatePracticeIntent",
           "slots": [
             {
@@ -81,40 +56,6 @@
     },
     "dialog": {
       "intents": [
-        {
-          "name": "CaptureBirthdayIntent",
-          "confirmationRequired": false,
-          "prompts": {},
-          "slots": [
-            {
-              "name": "month",
-              "type": "AMAZON.Month",
-              "elicitationRequired": true,
-              "confirmationRequired": false,
-              "prompts": {
-                "elicitation": "Elicit.Slot.1545633524831.1347716407493"
-              }
-            },
-            {
-              "name": "day",
-              "type": "AMAZON.Ordinal",
-              "elicitationRequired": true,
-              "confirmationRequired": false,
-              "prompts": {
-                "elicitation": "Elicit.Slot.1545633524831.190084519655"
-              }
-            },
-            {
-              "name": "year",
-              "type": "AMAZON.FOUR_DIGIT_NUMBER",
-              "elicitationRequired": true,
-              "confirmationRequired": false,
-              "prompts": {
-                "elicitation": "Elicit.Slot.1545633524831.788317813173"
-              }
-            }
-          ]
-        },
         {
           "name": "CreatePracticeIntent",
           "confirmationRequired": false,
@@ -209,5 +150,5 @@
       }
     ]
   },
-  "version": "16"
+  "version": "17"
 }
