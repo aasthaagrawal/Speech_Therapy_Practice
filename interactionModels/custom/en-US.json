@@ -23,19 +23,23 @@
           "name": "CreatePracticeIntent",
           "slots": [
             {
-              "name": "topic",
+              "name": "practice_type",
               "type": "AMAZON.SearchQuery"
             }
           ],
           "samples": [
-            "I will practice {topic}",
-            "I want to practice {topic}"
+            "I will work with {practice_type}",
+            "I want to work with {practice_type}"
           ]
         },
         {
-          "name": "StartPracticeIntent",
+          "name": "StartContinuePracticeIntent",
           "slots": [],
           "samples": [
+            "I will continue my session",
+            "i want to continue my session",
+            "Conitue my session",
+            "Conitue",
             "Start my session"
           ]
         },
@@ -50,105 +54,41 @@
           "samples": [
             "Speech {sentence}"
           ]
-        }
-      ],
-      "types": []
-    },
-    "dialog": {
-      "intents": [
+        },
         {
-          "name": "CreatePracticeIntent",
-          "confirmationRequired": false,
-          "prompts": {},
-          "slots": [
-            {
-              "name": "topic",
-              "type": "AMAZON.SearchQuery",
-              "elicitationRequired": true,
-              "confirmationRequired": false,
-              "prompts": {
-                "elicitation": "Elicit.Slot.1419484158131.989499861893"
-              }
-            }
+          "name": "AlphabetOptionsRepeatIntent",
+          "slots": [],
+          "samples": [
+            "what are my alphabet options",
+            "Could you repeat the alphabet options"
           ]
         },
         {
-          "name": "ValidationIntent",
-          "confirmationRequired": false,
-          "prompts": {},
+          "name": "SetAlphabetIntent",
           "slots": [
             {
-              "name": "sentence",
-              "type": "AMAZON.SearchQuery",
-              "elicitationRequired": false,
-              "confirmationRequired": false,
-              "prompts": {}
+              "name": "alphabet_option",
+              "type": "AMAZON.NUMBER"
             }
+          ],
+          "samples": [
+            "I want to practice option {alphabet_option}",
+            "I want to practice {alphabet_option}"
+          ]
+        },
+        {
+          "name": "QuitIntent",
+          "slots": [],
+          "samples": [
+            "I want to quit",
+            "i will quit my session now",
+            "I want to quit my session",
+            "quit"
           ]
         }
       ],
-      "delegationStrategy": "ALWAYS"
-    },
-    "prompts": [
-      {
-        "id": "Elicit.Slot.1545633524831.1347716407493",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "What month were you born in?"
-          }
-        ]
-      },
-      {
-        "id": "Elicit.Slot.1545633524831.190084519655",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "Which day were you born on?"
-          }
-        ]
-      },
-      {
-        "id": "Elicit.Slot.1545633524831.788317813173",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "Which year were you born on?"
-          }
-        ]
-      },
-      {
-        "id": "Elicit.Slot.1419484158131.989499861893",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "What would you like to practice with me today?"
-          },
-          {
-            "type": "PlainText",
-            "value": "What topic do you want to practice today?"
-          }
-        ]
-      },
-      {
-        "id": "Confirm.Intent.165957286408",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "You said you want to practice {topic} today, right?"
-          }
-        ]
-      },
-      {
-        "id": "Slot.Validation.605444304776.1462204828846.732210902741",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "Please chose either \u0027quit\u0027 or \u0027continue\u0027."
-          }
-        ]
-      }
-    ]
+      "types": []
+    }
   },
-  "version": "17"
+  "version": "23"
 }
