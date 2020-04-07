@@ -35,6 +35,12 @@ logger.setLevel(logging.INFO)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+NUM_ALPHABET_OPTIONS = 3
+alphabet_options_string = "1. Letter R, 2. Letter L, 3. Letter S,"
+alphabet_options = ["R", "L", "S"]
+practice_types_string = "words, phrases or sentences"
+practice_types = ["words", "phrases", "sentences"]
+
 PHRASES = [
      "i live in india",
      "read a book",
@@ -50,9 +56,46 @@ class LaunchRequestHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         data = handler_input.attributes_manager.request_attributes["_"]
-        speech = data["WELCOME_MSG"]
-        reprompt = data["WELCOME_REPROMPT_MSG"]
+        speech = data["WELCOME_MSG"].format(alphabet_options_string)
+        reprompt = data["WELCOME_REPROMPT_MSG"].format(alphabet_options_string)
         handler_input.response_builder.speak(speech).ask(reprompt)
+        return handler_input.response_builder.response
+
+class AlphabetOptionsRepeatHandler(AbstractRequestHandler):
+    
+    #Handler for Repeating options to the user
+    
+    def can_handle(self, handler_input):
+        return is_intent_name("AlphabetOptionsRepeatIntent")(handler_input)
+
+    def handle(self, handler_input):
+        data = handler_input.attributes_manager.request_attributes["_"]
+        speech = data["ALPHABET_OPTIONS_REPEAT_MSG"].format(alphabet_options_string)
+        handler_input.response_builder.speak(speech).ask(speech)
+        return handler_input.response_builder.response
+
+class SetAlphabetHandler(AbstractRequestHandler):
+    
+    #Handler for setting alphabet_option session attribute and asking user about practice type
+    
+    def can_handle(self, handler_input):
+        return is_intent_name("SetAlphabetIntent")(handler_input)
+    
+    def handle(self, handler_input):
+        data = handler_input.attributes_manager.request_attributes["_"]
+        slots = handler_input.request_envelope.request.intent.slots
+        alphabet_option = int(slots["alphabet_option"].value)-1
+        
+        if alphabet_option>(len(alphabet_options)-1) or alphabet_option<0:
+            speech =  data["ALPHABET_OPTIONS_REPEAT_MSG"].format(alphabet_options_string)
+            handler_input.response_builder.speak(speech).ask(speech)
+            return handler_input.response_builder.response
+        
+        session_attr = handler_input.attributes_manager.session_attributes
+        session_attr['alphabet_option'] = alphabet_option
+        speech = data["PRACTICE_TYPE_MSG"].format(alphabet_options[alphabet_option], practice_types_string)
+        repromt = data["PRACTICE_TYPE_REPROMPT_MSG"].format(practice_types_string)
+        handler_input.response_builder.speak(speech).ask(repromt)
         return handler_input.response_builder.response
 
 class CreatePracticeHandler(AbstractRequestHandler):
@@ -65,30 +108,40 @@ class CreatePracticeHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         data = handler_input.attributes_manager.request_attributes["_"]
         slots = handler_input.request_envelope.request.intent.slots
-        topic = slots["topic"].value
-        session_attr = handler_input.attributes_manager.session_attributes
-        session_attr['topic'] = topic
+        practice_type = slots["practice_type"].value
+        if practice_type not in practice_types:
+            speech = data["PRACTICE_TYPE_REPROMPT_MSG"].format(practice_types_string)
+            handler_input.response_builder.speak(speech).ask(speech)
+            return handler_input.response_builder.response
         
-        speech = "Say start my session to proceed"
+        session_attr = handler_input.attributes_manager.session_attributes
+        session_attr['practice_type'] = practice_type
+        
+        speech = data["START_SESSION_MSG"].format(practice_type)
         handler_input.response_builder.speak(speech).ask(speech)
         return handler_input.response_builder.response
 
-class StartPracticeHandler(AbstractRequestHandler):
+class StartContinuePracticeHandler(AbstractRequestHandler):
     
     #Handler for Capturing the Birthday
     
     def can_handle(self, handler_input):
-        return is_intent_name("StartPracticeIntent")(handler_input)
+        return is_intent_name("StartContinuePracticeIntent")(handler_input)
     
     def handle(self, handler_input):
         data = handler_input.attributes_manager.request_attributes["_"]
         session_attr = handler_input.attributes_manager.session_attributes
-        if "topic" not in session_attr:
-            speech = data["TOPIC_MISSING_MSG"]
+        if "alphabet_option" not in session_attr:
+            speech = data["ALPHABET_OPTIONS_REPEAT_MSG"].format(alphabet_options_string)
+            handler_input.response_builder.speak(speech).ask(speech)
+            return handler_input.response_builder.response
+        if "practice_type" not in session_attr:
+            speech = data["PRACTICE_TYPE_REPROMPT_MSG"].format(practice_types_string)
             handler_input.response_builder.speak(speech).ask(speech)
             return handler_input.response_builder.response
         
-        topic = session_attr["topic"]
+        alphabet_option = session_attr["alphabet_option"]
+        practice_type = session_attr["practice_type"]
         practice_sentence_index = randint(0,len(PHRASES)-1)
         practice_sentence = PHRASES[practice_sentence_index]
         session_attr['practice_sentence'] = practice_sentence
@@ -107,7 +160,7 @@ class ValidationHandler(AbstractRequestHandler):
         data = handler_input.attributes_manager.request_attributes["_"]
         slots = handler_input.request_envelope.request.intent.slots
         session_attr = handler_input.attributes_manager.session_attributes
-        user_sentence = slots["sentence"].value
+        user_sentence = (slots["sentence"].value).lower()
         practice_sentence = session_attr["practice_sentence"]
         
         if practice_sentence!=user_sentence:
@@ -118,28 +171,20 @@ class ValidationHandler(AbstractRequestHandler):
             speech = data["VALIDATION_CORRECT_USER_SENTENCE"]
             handler_input.response_builder.speak(speech).ask(speech)
             return handler_input.response_builder.response
-"""        
-class QuitContinueHandler(AbstractRequestHandler):
+
+class QuitHandler(AbstractRequestHandler):
     
     #Handler for Capturing the Birthday
     
     def can_handle(self, handler_input):
-        return is_intent_name("QuitContinueIntent")(handler_input)
+        return is_intent_name("QuitIntent")(handler_input)
     
     def handle(self, handler_input):
         data = handler_input.attributes_manager.request_attributes["_"]
-        slots = handler_input.request_envelope.request.intent.slots
-        user_response = slots["quit_continue"].value
-        
-        if user_response == "quit":
-            speech = data["VALIDATION_INCORRECT_USER_SENTENCE"].format(practice_sentence)
-            handler_input.response_builder.speak(speech).ask(speech)
-            return handler_input.response_builder.response
-        else:
-            speech = data["VALIDATION_CORRECT_USER_SENTENCE"]
-            handler_input.response_builder.speak(speech).ask(speech)
-            return handler_input.response_builder.response
-"""
+        speech = data["QUIT_MSG"]
+        handler_input.response_builder.speak(speech).withShouldEndSession(True)
+        return handler_input.response_builder.response
+
 
 class HelpIntentHandler(AbstractRequestHandler):
     """Handler for Help Intent."""
@@ -273,9 +318,12 @@ class LocalizationInterceptor(AbstractRequestInterceptor):
 sb = CustomSkillBuilder(persistence_adapter=s3_adapter)
 
 sb.add_request_handler(LaunchRequestHandler())
+sb.add_request_handler(AlphabetOptionsRepeatHandler())
+sb.add_request_handler(SetAlphabetHandler())
 sb.add_request_handler(CreatePracticeHandler())
-sb.add_request_handler(StartPracticeHandler())
+sb.add_request_handler(StartContinuePracticeHandler())
 sb.add_request_handler(ValidationHandler())
+sb.add_request_handler(QuitHandler())
 sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelOrStopIntentHandler())
 sb.add_request_handler(SessionEndedRequestHandler())

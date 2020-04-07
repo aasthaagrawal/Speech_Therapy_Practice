@@ -1,13 +1,17 @@
 from gettext import gettext as _
 
-WELCOME_MSG = _("Welcome to Speech Therapy Practice. What do you want to practice today?")
-WELCOME_REMPROMPT_MSG = _("I want to practice sentences with r sound. What do you want to practice today?")
+WELCOME_MSG = _("Welcome to Speech Therapy Practice. Which of the following alphabets do you want to focus on today? {} Please tell me which option number do you want to practice today.")
+WELCOME_REMPROMPT_MSG = _("Alphabet options are: {} I want to practice option one. What do you want to practice today?")
+ALPHABET_OPTIONS_REPEAT_MSG = _("Alphabet options are: {} Please tell me which option number do you want to practice today.")
+PRACTICE_TYPE_MSG = _("Great! Let's practice letter {}. Do you want to work with {}?")
+PRACTICE_TYPE_REPROMPT_MSG = _("What do you want to work with, {}?")
+START_SESSION_MSG = _("So we'll practice {} today. You could change alphabet option or practice type at any point of time. Say start my session to proceed.")
 CREATE_PRACTICE_MSG =  _("Topic selected is {}. Am I correct?")
 TOPIC_MISSING_MSG = _("What do you want to practice today?")
 START_PRACTICE_MSG = _("Please say the word 'Speech' and then repeat after me: {}")
 VALIDATION_INCORRECT_USER_SENTENCE = _("Your said {}. Let's try again! Please say the word 'Speech' and then repeat after me: {}")
-VALIDATION_CORRECT_USER_SENTENCE = _("Do you want to quit or continue?")
-QUIT_MESSAGE = _("Quitting the session. Bye!")
+VALIDATION_CORRECT_USER_SENTENCE = _("Awesome! That was correct. Do you want to quit or continue?")
+QUIT_MSG = _("Quitting the session. Bye!")
 WELCOME_BACK_MSG = _(
     "Welcome back. It looks like there is {} day until your {}th birthday.")
 WELCOME_BACK_MSG_plural = _(
