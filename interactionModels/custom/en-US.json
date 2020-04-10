@@ -80,6 +80,8 @@
           "name": "QuitIntent",
           "slots": [],
           "samples": [
+            "I want to exit",
+            "exit",
             "I want to quit",
             "i will quit my session now",
             "I want to quit my session",
@@ -90,5 +92,5 @@
       "types": []
     }
   },
-  "version": "23"
+  "version": "26"
 }

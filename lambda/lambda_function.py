@@ -40,12 +40,14 @@ alphabet_options_string = "1. Letter R, 2. Letter L, 3. Letter S,"
 alphabet_options = ["R", "L", "S"]
 practice_types_string = "words, phrases or sentences"
 practice_types = ["words", "phrases", "sentences"]
-
+practice_collection = {}
 PHRASES = [
      "i live in india",
      "read a book",
      "finish my work",
      "i like my coffee cup"]
+
+#COLLECTION = json.load("collection.json")
 
 class LaunchRequestHandler(AbstractRequestHandler):
     """
@@ -100,7 +102,7 @@ class SetAlphabetHandler(AbstractRequestHandler):
 
 class CreatePracticeHandler(AbstractRequestHandler):
     
-    #Handler for Capturing the Birthday
+    #Handler for recording practice_type attribute
     
     def can_handle(self, handler_input):
         return is_intent_name("CreatePracticeIntent")(handler_input)
@@ -123,7 +125,7 @@ class CreatePracticeHandler(AbstractRequestHandler):
 
 class StartContinuePracticeHandler(AbstractRequestHandler):
     
-    #Handler for Capturing the Birthday
+    #Handler for creating practice item and telling the user to repeat
     
     def can_handle(self, handler_input):
         return is_intent_name("StartContinuePracticeIntent")(handler_input)
@@ -140,18 +142,21 @@ class StartContinuePracticeHandler(AbstractRequestHandler):
             handler_input.response_builder.speak(speech).ask(speech)
             return handler_input.response_builder.response
         
-        alphabet_option = session_attr["alphabet_option"]
+        alphabet_option = alphabet_options[session_attr["alphabet_option"]]
         practice_type = session_attr["practice_type"]
-        practice_sentence_index = randint(0,len(PHRASES)-1)
-        practice_sentence = PHRASES[practice_sentence_index]
-        session_attr['practice_sentence'] = practice_sentence
-        speech = data["START_PRACTICE_MSG"].format(practice_sentence)
+        global practice_collection
+        collection = practice_collection[alphabet_option][practice_type]
+        practice_item_index = randint(0,len(collection)-1)
+        #practice_sentence = (PHRASES[practice_sentence_index]).lower()
+        practice_item = (collection[practice_item_index]).lower()
+        session_attr['practice_item'] = practice_item
+        speech = data["START_PRACTICE_MSG"].format(practice_item)
         handler_input.response_builder.speak(speech).ask(speech)
         return handler_input.response_builder.response
 
 class ValidationHandler(AbstractRequestHandler):
     
-    #Handler for Capturing the Birthday
+    #Handler for validating user utterence 
     
     def can_handle(self, handler_input):
         return is_intent_name("ValidationIntent")(handler_input)
@@ -160,11 +165,11 @@ class ValidationHandler(AbstractRequestHandler):
         data = handler_input.attributes_manager.request_attributes["_"]
         slots = handler_input.request_envelope.request.intent.slots
         session_attr = handler_input.attributes_manager.session_attributes
-        user_sentence = (slots["sentence"].value).lower()
-        practice_sentence = session_attr["practice_sentence"]
+        user_item = (slots["sentence"].value).lower()
+        practice_item = session_attr["practice_item"]
         
-        if practice_sentence!=user_sentence:
-            speech = data["VALIDATION_INCORRECT_USER_SENTENCE"].format(user_sentence, practice_sentence)
+        if practice_item!=user_item:
+            speech = data["VALIDATION_INCORRECT_USER_SENTENCE"].format(user_item, practice_item)
             handler_input.response_builder.speak(speech).ask(speech)
             return handler_input.response_builder.response
         else:
@@ -174,7 +179,7 @@ class ValidationHandler(AbstractRequestHandler):
 
 class QuitHandler(AbstractRequestHandler):
     
-    #Handler for Capturing the Birthday
+    #Handler for user's request to quit the session
     
     def can_handle(self, handler_input):
         return is_intent_name("QuitIntent")(handler_input)
@@ -313,6 +318,10 @@ class LocalizationInterceptor(AbstractRequestInterceptor):
         # configure the runtime to treat time according to the skill locale
         skill_locale = skill_locale.replace('-','_')
         locale.setlocale(locale.LC_TIME, skill_locale)
+        
+        global practice_collection
+        with open("collection.json") as collection:
+            practice_collection = json.load(collection)
         
 
 sb = CustomSkillBuilder(persistence_adapter=s3_adapter)
