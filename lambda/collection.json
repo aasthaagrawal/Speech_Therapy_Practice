@@ -1,0 +1,54 @@
+{
+    "R": {
+            "words": [ "run",
+                       "rat",
+                       "red",
+                       "carrot"
+                     ],
+            "phrases": [ "run",
+                       "rat",
+                       "red",
+                       "carrot"
+                     ],
+            "sentences": [ "i live in india",
+                            "read a book",
+                            "finish my work",
+                            "i like my coffee cup"
+                        ]
+            
+    },
+    "L": {
+            "words": [ "run",
+                       "rat",
+                       "red",
+                       "carrot"
+                     ],
+            "phrases": [ "run",
+                       "rat",
+                       "red",
+                       "carrot"
+                     ],
+            "sentences": [ "run",
+                       "rat",
+                       "red",
+                       "carrot"
+                     ]
+    },
+    "S": {
+            "words": [ "run",
+                       "rat",
+                       "red",
+                       "carrot"
+                     ],
+            "phrases": [ "run",
+                       "rat",
+                       "red",
+                       "carrot"
+                     ],
+            "sentences": [ "run",
+                       "rat",
+                       "red",
+                       "carrot"
+                     ]
+    }
+}
