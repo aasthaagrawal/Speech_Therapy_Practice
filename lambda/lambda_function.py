@@ -12,10 +12,11 @@ import locale
 import requests
 import calendar
 import gettext
-from random import randint
+from random import sample
 from datetime import datetime
 from pytz import timezone
 from ask_sdk_s3.adapter import S3Adapter
+from ask_sdk_model.dialog import DelegateDirective
 s3_adapter = S3Adapter(bucket_name=os.environ["S3_PERSISTENCE_BUCKET"])
 
 from alexa import data
@@ -119,20 +120,22 @@ class CreatePracticeHandler(AbstractRequestHandler):
         session_attr = handler_input.attributes_manager.session_attributes
         session_attr['practice_type'] = practice_type
         
-        speech = data["START_SESSION_MSG"].format(practice_type)
+        speech = data["NUM_PRACTICES_MSG"].format(practice_type)
         handler_input.response_builder.speak(speech).ask(speech)
         return handler_input.response_builder.response
 
-class StartContinuePracticeHandler(AbstractRequestHandler):
+class StartPracticeHandler(AbstractRequestHandler):
     
     #Handler for creating practice item and telling the user to repeat
     
     def can_handle(self, handler_input):
-        return is_intent_name("StartContinuePracticeIntent")(handler_input)
+        return is_intent_name("StartPracticeIntent")(handler_input)
     
     def handle(self, handler_input):
         data = handler_input.attributes_manager.request_attributes["_"]
+        slots = handler_input.request_envelope.request.intent.slots
         session_attr = handler_input.attributes_manager.session_attributes
+        num_practices = int(slots["num_practices"].value)
         if "alphabet_option" not in session_attr:
             speech = data["ALPHABET_OPTIONS_REPEAT_MSG"].format(alphabet_options_string)
             handler_input.response_builder.speak(speech).ask(speech)
@@ -142,15 +145,49 @@ class StartContinuePracticeHandler(AbstractRequestHandler):
             handler_input.response_builder.speak(speech).ask(speech)
             return handler_input.response_builder.response
         
+        session_attr["num_practices"] = num_practices
+        session_attr["num_left_practices"] = num_practices
         alphabet_option = alphabet_options[session_attr["alphabet_option"]]
         practice_type = session_attr["practice_type"]
         global practice_collection
         collection = practice_collection[alphabet_option][practice_type]
-        practice_item_index = randint(0,len(collection)-1)
-        #practice_sentence = (PHRASES[practice_sentence_index]).lower()
-        practice_item = (collection[practice_item_index]).lower()
-        session_attr['practice_item'] = practice_item
-        speech = data["START_PRACTICE_MSG"].format(practice_item)
+        if (num_practices > len(collection)):
+            speech = data["CORRECT_NUM_PRACTICES_MSG"].format(len(collection))
+            handler_input.response_builder.speak(speech).ask(speech)
+            return handler_input.response_builder.response
+        practice_item_indices = sample(range(len(collection)-1), num_practices)
+        practice_items = []
+        for index in practice_item_indices:
+            practice_items.append((collection[index]).lower())
+        session_attr['practice_items'] = practice_items
+        speech = data["START_SESSION_MSG"]
+        handler_input.response_builder.speak(speech).ask(speech)
+        return handler_input.response_builder.response
+        # return handler_input.response_builder.add_directive(
+        #     DelegateDirective(updated_intent = ContinuePracticeIntent)
+        #     )
+
+class ContinuePracticeHandler(AbstractRequestHandler):
+    
+    #Handler for creating practice item and telling the user to repeat
+    
+    def can_handle(self, handler_input):
+        return is_intent_name("ContinuePracticeIntent")(handler_input)
+    
+    def handle(self, handler_input):
+        data = handler_input.attributes_manager.request_attributes["_"]
+        session_attr = handler_input.attributes_manager.session_attributes
+        current_intent = handler_input.request_envelope.request.intent
+        # num_practices = session_attr["num_practices"]
+        num_left_practices = session_attr["num_left_practices"]
+        if (num_left_practices == 0):
+            speech = data["QUIT_OR_CONTINUE_MSG"]
+            handler_input.response_builder.speak(speech).ask(speech)
+            return handler_input.response_builder.response
+        practice_items = session_attr['practice_items']
+        session_attr['practice_item'] = practice_items[num_left_practices - 1]
+        speech = data["START_PRACTICE_MSG"].format(practice_items[num_left_practices - 1])
+        session_attr["num_left_practices"] -= 1
         handler_input.response_builder.speak(speech).ask(speech)
         return handler_input.response_builder.response
 
@@ -168,27 +205,44 @@ class ValidationHandler(AbstractRequestHandler):
         user_item = (slots["sentence"].value).lower()
         practice_item = session_attr["practice_item"]
         
-        if practice_item!=user_item:
+        practice_item_words = practice_item.split(" ")
+        user_item_words = user_item.split(" ")
+        
+        if len(user_item_words) != len(practice_item_words):
             speech = data["VALIDATION_INCORRECT_USER_SENTENCE"].format(user_item, practice_item)
             handler_input.response_builder.speak(speech).ask(speech)
             return handler_input.response_builder.response
         else:
-            speech = data["VALIDATION_CORRECT_USER_SENTENCE"]
-            handler_input.response_builder.speak(speech).ask(speech)
-            return handler_input.response_builder.response
+            wrong_index = len(user_item_words)
+            for i in range(len(user_item_words)):
+                if user_item_words[i] != practice_item_words[i]:
+                    wrong_index = i;
+                    break;
+            if (wrong_index == 0):
+                speech = data["VALIDATION_INCORRECT_USER_SENTENCE"].format(user_item, practice_item)
+                handler_input.response_builder.speak(speech).ask(speech)
+                return handler_input.response_builder.response
+            elif (wrong_index == len(user_item_words)):
+                speech = data["VALIDATION_CORRECT_USER_SENTENCE"].format(session_attr['practice_type'])
+                handler_input.response_builder.speak(speech).ask(speech)
+                return handler_input.response_builder.response
+            else:
+                speech = data["VALIDATION_ALMOST_CORRECT_SENTENCE"].format(practice_item_words[wrong_index], practice_item)
+                handler_input.response_builder.speak(speech).ask(speech)
+                return handler_input.response_builder.response
 
-class QuitHandler(AbstractRequestHandler):
+# class QuitHandler(AbstractRequestHandler):
     
-    #Handler for user's request to quit the session
+#     #Handler for user's request to quit the session
     
-    def can_handle(self, handler_input):
-        return is_intent_name("QuitIntent")(handler_input)
+#     def can_handle(self, handler_input):
+#         return is_intent_name("QuitIntent")(handler_input)
     
-    def handle(self, handler_input):
-        data = handler_input.attributes_manager.request_attributes["_"]
-        speech = data["QUIT_MSG"]
-        handler_input.response_builder.speak(speech).withShouldEndSession(True)
-        return handler_input.response_builder.response
+#     def handle(self, handler_input):
+#         data = handler_input.attributes_manager.request_attributes["_"]
+#         speech = data["QUIT_MSG"]
+#         handler_input.response_builder.speak(speech).withShouldEndSession(True)
+#         return handler_input.response_builder.response
 
 
 class HelpIntentHandler(AbstractRequestHandler):
@@ -215,13 +269,12 @@ class CancelOrStopIntentHandler(AbstractRequestHandler):
     """Single handler for Cancel and Stop Intent."""
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return (ask_utils.is_intent_name("AMAZON.CancelIntent")(handler_input) or
-                ask_utils.is_intent_name("AMAZON.StopIntent")(handler_input))
+        return is_intent_name("AMAZON.StopIntent")(handler_input)
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         data = handler_input.attributes_manager.request_attributes["_"]
-        speak_output = data["GOODBYE_MSG"]
+        speak_output = data["QUIT_MSG"]
 
         return (
             handler_input.response_builder
@@ -330,9 +383,10 @@ sb.add_request_handler(LaunchRequestHandler())
 sb.add_request_handler(AlphabetOptionsRepeatHandler())
 sb.add_request_handler(SetAlphabetHandler())
 sb.add_request_handler(CreatePracticeHandler())
-sb.add_request_handler(StartContinuePracticeHandler())
+sb.add_request_handler(StartPracticeHandler())
+sb.add_request_handler(ContinuePracticeHandler())
 sb.add_request_handler(ValidationHandler())
-sb.add_request_handler(QuitHandler())
+# sb.add_request_handler(QuitHandler())
 sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelOrStopIntentHandler())
 sb.add_request_handler(SessionEndedRequestHandler())

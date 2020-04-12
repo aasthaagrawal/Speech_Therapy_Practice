@@ -1,54 +1,86 @@
 {
     "R": {
-            "words": [ "run",
-                       "rat",
-                       "red",
-                       "carrot"
+            "words": [ "run","rat","red","rabbit","rich","ring","rock","rocket","race","rain",
+                        "carrot","horse","arm","giraffe","fairy","turtle","camera","party","corn","earth",
+                        "four","bear","ear","jar","doctor","mother","car","chair","flower","father"
                      ],
-            "phrases": [ "run",
-                       "rat",
-                       "red",
-                       "carrot"
+            "phrases": [ "raccoon tail",
+                         "pretty rainbow",
+                         "reach up high",
+                         "bowl of rice",
+                         "cherry on top",
+                         "thick forest",
+                         "super hero",
+                         "loud cheer",
+                         "wood floor",
+                         "pour water"
                      ],
-            "sentences": [ "i live in india",
-                            "read a book",
-                            "finish my work",
-                            "i like my coffee cup"
+            "sentences": [ "I want raisins in my cereal",
+                            "I am listening to an old radio",
+                            "She is holding a ribbon",
+                            "She writes in her journal every week",
+                            "Mom read a story to her son",
+                            "They are a married couple",
+                            "He ate blueberries for breakfast",
+                            "A square has four sides",
+                            "The star was hanging on the tree",
+                            "The fire kept them warm"
                         ]
             
     },
     "L": {
-            "words": [ "run",
-                       "rat",
-                       "red",
-                       "carrot"
+            "words": [ "leaf","lamp","list","ladybug","lemon","lamb","lunch","late","lion","land",
+                        "belly","balloon","pillow","calendar","wallpaper","shoelace","dollar","island","family","elephant",
+                        "ball","bell","heel","whale","call","yell","pencil","wheel","towel","muscle"
                      ],
-            "phrases": [ "run",
-                       "rat",
-                       "red",
-                       "carrot"
+            "phrases": [ "pretty lady",
+                       "laugh hard",
+                       "beautiful lake",
+                       "green lizard",
+                       "brown buffalo",
+                       "long eyelash",
+                       "fruit jelly",
+                       "swimming pool",
+                       "night owl",
+                       "fall season"
                      ],
-            "sentences": [ "run",
-                       "rat",
-                       "red",
-                       "carrot"
+            "sentences": [ "The laundry basket is full",
+                       "Turn the light on please",
+                       "They used a lock on the gate",
+                       "It is a long walk to the beach",
+                       "We are going on vacation in July",
+                       "The polar bear looked for food",
+                       "The mail came this morning",
+                       "The dog's tail is straight",
+                       "The owl is sitting in the tree"
                      ]
     },
     "S": {
-            "words": [ "run",
-                       "rat",
-                       "red",
-                       "carrot"
+            "words": [ "Sing", "sun", "save", "seed", "seat", "city", "said", "sad", "sorry", "soap", 
+                        "Gasoline", "grasshopper", "motorcycle", "fossil", "Pencil", "muscle", "beside", "racing", "insect", "recipe", 
+                        "Class", "dress", "erase", "house", "mouse", "race", "lettuce", "fence", "miss", "juice"
                      ],
-            "phrases": [ "run",
-                       "rat",
-                       "red",
-                       "carrot"
+            "phrases": [ "so sorry",
+                        "soup bowl",
+                        "sour lemon",
+                        "bright sun",
+                        "scary dinosaur",
+                        "wood dresser",
+                        "pencil eraser",
+                        "water glass",
+                        "tall grass",
+                        "fast horse"
                      ],
-            "sentences": [ "run",
-                       "rat",
-                       "red",
-                       "carrot"
+            "sentences": [ "Tie your shoelace before jogging",
+                        "Tennis is her favorite sport",
+                        "The walrus has huge tusks",
+                        "Listen with the headphones",
+                        "He is holding the medicine bottle",
+                        "There was a message in the bottle",
+                        "They are taking the sailboat on the water",
+                        "We ordered a salad for lunch",
+                        "The salt was dumped out on the table",
+                        "The desert had endless hills of sand"
                      ]
     }
 }
