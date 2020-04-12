@@ -13,7 +13,14 @@
         },
         {
           "name": "AMAZON.StopIntent",
-          "samples": []
+          "samples": [
+            "quit the session",
+            "exit the session",
+            "I want to exit",
+            "exit",
+            "I want to quit",
+            "quit"
+          ]
         },
         {
           "name": "AMAZON.NavigateHomeIntent",
@@ -24,22 +31,35 @@
           "slots": [
             {
               "name": "practice_type",
-              "type": "AMAZON.SearchQuery"
+              "type": "PracticeType"
             }
           ],
           "samples": [
+            "practice {practice_type}",
+            "{practice_type}",
+            "I want to practice {practice_type}",
+            "Let\u0027s do {practice_type}",
             "I will work with {practice_type}",
             "I want to work with {practice_type}"
           ]
         },
         {
-          "name": "StartContinuePracticeIntent",
+          "name": "ContinuePracticeIntent",
           "slots": [],
           "samples": [
+            "ready",
+            "i am ready",
+            "next",
+            "start the session",
+            "skip this sentence",
+            "skip this phrase",
+            "skip this word",
+            "skip this",
+            "skip",
             "I will continue my session",
             "i want to continue my session",
-            "Conitue my session",
-            "Conitue",
+            "Continue my session",
+            "Continue",
             "Start my session"
           ]
         },
@@ -52,7 +72,7 @@
             }
           ],
           "samples": [
-            "Speech {sentence}"
+            " {sentence}"
           ]
         },
         {
@@ -72,25 +92,73 @@
             }
           ],
           "samples": [
+            "option {alphabet_option}",
+            "{alphabet_option}",
             "I want to practice option {alphabet_option}",
             "I want to practice {alphabet_option}"
           ]
         },
         {
-          "name": "QuitIntent",
-          "slots": [],
+          "name": "StartPracticeIntent",
+          "slots": [
+            {
+              "name": "num_practices",
+              "type": "AMAZON.NUMBER"
+            }
+          ],
           "samples": [
-            "I want to exit",
-            "exit",
-            "I want to quit",
-            "i will quit my session now",
-            "I want to quit my session",
-            "quit"
+            "i would like to practices {num_practices} phrases",
+            "i would like to practice {num_practices} sentences",
+            "i would like to practice {num_practices} words",
+            "{num_practices} sentences",
+            "{num_practices} words",
+            "{num_practices} phrases"
           ]
         }
       ],
-      "types": []
+      "types": [
+        {
+          "values": [
+            {
+              "name": {
+                "value": "more"
+              }
+            },
+            {
+              "name": {
+                "value": "sentence"
+              }
+            },
+            {
+              "name": {
+                "value": "phrase"
+              }
+            },
+            {
+              "name": {
+                "value": "word"
+              }
+            },
+            {
+              "name": {
+                "value": "sentences"
+              }
+            },
+            {
+              "name": {
+                "value": "phrases"
+              }
+            },
+            {
+              "name": {
+                "value": "words"
+              }
+            }
+          ],
+          "name": "PracticeType"
+        }
+      ]
     }
   },
-  "version": "26"
+  "version": "50"
 }
