@@ -22,3 +22,9 @@ Using the above three mentioned properties, we create a session and walk user th
 
 
 ## Future work
+* Support for persisting user profile across sessions
+* Intent chaining to make the user-device interaction after each practice item more smooth
+* Adding more alexa responses to make the session more interesting
+* Support for dynamic addition of practice items
+* Growing our collection of practice items
+* Making session create action faster for repetitive users (giving them option to directly feed in the three choices instead of walking them through each one by one)
