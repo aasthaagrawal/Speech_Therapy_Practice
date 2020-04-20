@@ -12,9 +12,13 @@ Our skill provides session based practice to the users. A session is created bas
 
 Using the above three mentioned properties, we create a session and walk user through a series of practice items. For each practice item, user's speech is captured, analyzed and useful feedback is provided. We validate each practice item at word level granuality. If a user makes a mistake, we highlight where they went wrong and encourage them to speack the entire practice item once again. We also give them flexibility to skip a practice item, if they find it too hard. As of now, we only look for mispronunciation errors in user's speech.
 
-## Intents
-We have 
+## Basic code flow
+* Intent descriptions could be found at interactionModels/custom/en-US.json
+* Intent handlers could be found at lambda/lambda_function.py 
+* Current collection of practice items is stored in lambda/collection.json
+* Alexa responses are stored at lambda/language_strings.json
 
 ## User-device interaction
+
 
 ## Future work
