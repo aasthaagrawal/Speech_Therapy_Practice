@@ -10,15 +10,15 @@
     },
     "manifestVersion": "1.0",
     "publishingInformation": {
+      "category": "KNOWLEDGE_AND_TRIVIA",
+      "distributionCountries": [],
+      "isAvailableWorldwide": true,
       "locales": {
         "en-US": {
           "name": "SpeechTherapyPractice"
         }
       },
-      "isAvailableWorldwide": true,
-      "testingInstructions": "Sample Testing Instructions.",
-      "category": "KNOWLEDGE_AND_TRIVIA",
-      "distributionCountries": []
+      "testingInstructions": "Sample Testing Instructions."
     }
   }
 }

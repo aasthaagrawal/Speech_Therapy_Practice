@@ -1,0 +1,27 @@
+Sound R:
+    Words:
+        red -> read
+    Phrases: 
+        thick forest -> 'thick' does not get recognised. Could be because of the accent
+    Sentences:
+        
+
+Sound L:
+    Words:
+        
+    Phrases: 
+    
+    Sentences:
+    They are taking the sailboat on the water -> They're
+    
+
+    
+
+Sound S:
+    Words:
+    
+    Phrases: 
+    Wood dresser -> would dresser
+    
+    Sentences:
+        
