@@ -51,7 +51,13 @@ Using the above three mentioned properties, we create a session and walk the use
     </tr>
     <tr>
       <td>How many practice items to practice</td>
-      <td align="center">right-aligned</td>
+      <td>
+        <ul>
+          <li>I would like to practice {number} {selected practice_type}</li>
+          <li>{number} {selected practice_type}</li>
+          <li>I want to practice {number} {selected practice_type}</li>
+        </ul>
+      </td>
     </tr>
     <tr>
       <td>Practice the item</td>
@@ -71,23 +77,6 @@ Using the above three mentioned properties, we create a session and walk the use
           <li>Could you repeate the alphabet options</li>
         </ul>
       </td>
-    </tr>
-    <tr>
-      <td>col 2 is</td>
-      <td align="center">centered</td>
-    </tr>
-    <tr>
-      <td>zebra stripes</td>
-      <td align="center">are neat</td>
-    </tr>
-    <tr>
-      <td>
-        <ul>
-          <li>item1</li>
-          <li>item2</li>
-        </ul>
-      </td>
-      <td align="center">See the list</td>
     </tr>
   </tbody>
 </table>
