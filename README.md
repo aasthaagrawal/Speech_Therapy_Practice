@@ -36,24 +36,39 @@ Using the above three mentioned properties, we create a session and walk the use
 <table>
   <tbody>
     <tr>
-      <th>Tables</th>
-      <th align="center">Are</th>
-      <th align="right">Cool</th>
+      <th>Alexa's question / Scenario</th>
+      <th align="center">Response accepted</th>
     </tr>
     <tr>
-      <td>col 3 is</td>
+      <td>Which sound option user wants to practice</td>
+      <td>
+        <ul>
+          <li>option {1/2/3}</li>
+          <li>{1/2/3}</li>
+          <li>I want to practice option {1/2/3}</li>
+          <li>I want to practice {1/2/3}</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Which practice type to focus on</td>
       <td align="center">right-aligned</td>
-      <td align="right">$1600</td>
+    </tr>
+    <tr>
+      <td>How many practice items to practice</td>
+      <td align="center">right-aligned</td>
+    </tr>
+    <tr>
+      <td>Practice the item</td>
+      <td align="center">right-aligned</td>
     </tr>
     <tr>
       <td>col 2 is</td>
       <td align="center">centered</td>
-      <td align="right">$12</td>
     </tr>
     <tr>
       <td>zebra stripes</td>
       <td align="center">are neat</td>
-      <td align="right">$1</td>
     </tr>
     <tr>
       <td>
@@ -63,7 +78,6 @@ Using the above three mentioned properties, we create a session and walk the use
         </ul>
       </td>
       <td align="center">See the list</td>
-      <td align="right">from the first column</td>
     </tr>
   </tbody>
 </table>
