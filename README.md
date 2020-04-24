@@ -27,8 +27,8 @@ Using the above three mentioned properties, we create a session and walk the use
       <th align="center">Response accepted</th>
     </tr>
     <tr>
-      <td>Invocation/To open the alexa skill</td>
-      <td>Alexa open Speech Practice</td>
+      <td>Invocation / To open the alexa skill</td>
+      <td>Alexa, open Speech Practice</td>
     </tr>
     <tr>
       <td>Which sound option user wants to practice</td>
