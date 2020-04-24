@@ -68,6 +68,24 @@ Using the above three mentioned properties, we create a session and walk the use
       </td>
     </tr>
     <tr>
+      <td>
+        <ul>
+          <li>To start the session</li>
+          <li>To move to the next practice item</li>
+          <li>Skip practice item</li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li>I'm ready</li>
+          <li>ready</li>
+          <li>I am ready</li>
+          <li>next</li>
+          <li>skip this sentence</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
       <td>To ask Alexa to repeat alphabet/sound options</td>
       <td>
         <ul>
