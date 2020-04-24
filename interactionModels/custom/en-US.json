@@ -47,10 +47,10 @@
           "name": "ContinuePracticeIntent",
           "slots": [],
           "samples": [
+            "I\u0027m ready",
             "ready",
-            "i am ready",
+            "I am ready",
             "next",
-            "start the session",
             "skip this sentence",
             "skip this phrase",
             "skip this word",
@@ -59,8 +59,7 @@
             "I will continue my session",
             "i want to continue my session",
             "Continue my session",
-            "Continue",
-            "Start my session"
+            "Continue"
           ]
         },
         {
@@ -79,6 +78,8 @@
           "name": "AlphabetOptionsRepeatIntent",
           "slots": [],
           "samples": [
+            "Could you repeate the sound options",
+            "What are my sound options",
             "what are my alphabet options",
             "Could you repeat the alphabet options"
           ]
@@ -104,15 +105,16 @@
             {
               "name": "num_practices",
               "type": "AMAZON.NUMBER"
+            },
+            {
+              "name": "practice_type",
+              "type": "PracticeType"
             }
           ],
           "samples": [
-            "i would like to practices {num_practices} phrases",
-            "i would like to practice {num_practices} sentences",
-            "i would like to practice {num_practices} words",
-            "{num_practices} sentences",
-            "{num_practices} words",
-            "{num_practices} phrases"
+            "I would like to practice {num_practices} {practice_type}",
+            "I want to practice {num_practices} {practice_type}",
+            "{num_practices} {practice_type}"
           ]
         }
       ],
@@ -160,5 +162,5 @@
       ]
     }
   },
-  "version": "50"
+  "version": "54"
 }

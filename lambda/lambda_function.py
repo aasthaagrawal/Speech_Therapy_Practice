@@ -12,7 +12,7 @@ import locale
 import requests
 import calendar
 import gettext
-from random import sample
+import random
 from datetime import datetime
 from pytz import timezone
 from ask_sdk_s3.adapter import S3Adapter
@@ -37,18 +37,11 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 NUM_ALPHABET_OPTIONS = 3
-alphabet_options_string = "1. Letter R, 2. Letter L, 3. Letter S,"
+alphabet_options_string = "1. sound R, 2. sound L, 3. sound S,"
 alphabet_options = ["R", "L", "S"]
 practice_types_string = "words, phrases or sentences"
 practice_types = ["words", "phrases", "sentences"]
 practice_collection = {}
-PHRASES = [
-     "i live in india",
-     "read a book",
-     "finish my work",
-     "i like my coffee cup"]
-
-#COLLECTION = json.load("collection.json")
 
 class LaunchRequestHandler(AbstractRequestHandler):
     """
@@ -155,7 +148,7 @@ class StartPracticeHandler(AbstractRequestHandler):
             speech = data["CORRECT_NUM_PRACTICES_MSG"].format(len(collection))
             handler_input.response_builder.speak(speech).ask(speech)
             return handler_input.response_builder.response
-        practice_item_indices = sample(range(len(collection)-1), num_practices)
+        practice_item_indices = random.sample(range(len(collection)-1), num_practices)
         practice_items = []
         for index in practice_item_indices:
             practice_items.append((collection[index]).lower())
@@ -163,9 +156,6 @@ class StartPracticeHandler(AbstractRequestHandler):
         speech = data["START_SESSION_MSG"]
         handler_input.response_builder.speak(speech).ask(speech)
         return handler_input.response_builder.response
-        # return handler_input.response_builder.add_directive(
-        #     DelegateDirective(updated_intent = ContinuePracticeIntent)
-        #     )
 
 class ContinuePracticeHandler(AbstractRequestHandler):
     
@@ -204,6 +194,8 @@ class ValidationHandler(AbstractRequestHandler):
         session_attr = handler_input.attributes_manager.session_attributes
         user_item = (slots["sentence"].value).lower()
         practice_item = session_attr["practice_item"]
+        alphabet_option = session_attr["alphabet_option"]
+        # print(alphabet_option)
         
         practice_item_words = practice_item.split(" ")
         user_item_words = user_item.split(" ")
@@ -216,34 +208,34 @@ class ValidationHandler(AbstractRequestHandler):
             wrong_index = len(user_item_words)
             for i in range(len(user_item_words)):
                 if user_item_words[i] != practice_item_words[i]:
-                    wrong_index = i;
-                    break;
+                    lowercase_word = practice_item_words[i].lower()
+                    if (alphabet_option == 0):
+                        if "r" in lowercase_word:
+                            wrong_index = i;
+                            break;
+                    if (alphabet_option == 1):
+                        if "l" in lowercase_word:
+                            wrong_index = i;
+                            break;
+                    if (alphabet_option == 2):
+                        if "s" in lowercase_word or "c" in lowercase_word:
+                            wrong_index = i;
+                            break;
+                    
             if (wrong_index == 0):
                 speech = data["VALIDATION_INCORRECT_USER_SENTENCE"].format(user_item, practice_item)
                 handler_input.response_builder.speak(speech).ask(speech)
                 return handler_input.response_builder.response
             elif (wrong_index == len(user_item_words)):
-                speech = data["VALIDATION_CORRECT_USER_SENTENCE"].format(session_attr['practice_type'])
+                num_correct_string_options = len(data["VALIDATION_CORRECT_USER_SENTENCE"])
+                index = random.randint(0, num_correct_string_options-1)
+                speech = data["VALIDATION_CORRECT_USER_SENTENCE"][str(index)] + " " + data["SAY_NEXT_SENTENCE"]
                 handler_input.response_builder.speak(speech).ask(speech)
                 return handler_input.response_builder.response
             else:
                 speech = data["VALIDATION_ALMOST_CORRECT_SENTENCE"].format(practice_item_words[wrong_index], practice_item)
                 handler_input.response_builder.speak(speech).ask(speech)
                 return handler_input.response_builder.response
-
-# class QuitHandler(AbstractRequestHandler):
-    
-#     #Handler for user's request to quit the session
-    
-#     def can_handle(self, handler_input):
-#         return is_intent_name("QuitIntent")(handler_input)
-    
-#     def handle(self, handler_input):
-#         data = handler_input.attributes_manager.request_attributes["_"]
-#         speech = data["QUIT_MSG"]
-#         handler_input.response_builder.speak(speech).withShouldEndSession(True)
-#         return handler_input.response_builder.response
-
 
 class HelpIntentHandler(AbstractRequestHandler):
     """Handler for Help Intent."""
