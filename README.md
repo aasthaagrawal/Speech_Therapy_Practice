@@ -71,7 +71,7 @@ Using the above three mentioned properties, we create a session and walk the use
       <td>To ask Alexa to repeat alphabet/sound options</td>
       <td>
         <ul>
-          <li>Could you repeate the sound options</li>
+          <li>Could you repeat the sound options</li>
           <li>What are my sound options</li>
           <li>Could you repeate the alphabet options</li>
           <li>Could you repeate the alphabet options</li>
