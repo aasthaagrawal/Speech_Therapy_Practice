@@ -21,7 +21,7 @@ Using the above three mentioned properties, we create a session and walk the use
 ## User-device interaction
 
 | Alexa question / Scenario           | Response accepted         |
-| : -------------: |-------------|
+| ------------- |-------------|
 | When Alexa asks about which sound option user wants to practice        | right-aligned |
 | When ALexa asks which practice type to focus on    | are neat      |
 | When ALexa asks how many practice items to practice    | are neat      |
