@@ -1,6 +1,6 @@
 # Speech_Therapy_Practice
 
-Speech Therapy Practice is an Alexa skill for at-home practice of difficult sounds for people with speech disabilities. User could use their echo device to practice. 
+Speech Therapy Practice is an Alexa skill for at-home practice of difficult sounds for people with speech disabilities. User could use their echo device to practice with this skill. 
 
 The skill is developed using Alexa SDK, Python and Amazon Lambda functions.
 
