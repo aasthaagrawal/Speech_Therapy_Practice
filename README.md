@@ -20,12 +20,15 @@ Using the above three mentioned properties, we create a session and walk the use
 
 ## User-device interaction
 
-| Alexa question / Scenario           | Response accepted         |
+| Alexa's question / Scenario           | Response accepted         |
 | ------------- |-------------|
-| When Alexa asks about which sound option user wants to practice        | right-aligned |
-| When ALexa asks which practice type to focus on    | are neat      |
-| When ALexa asks how many practice items to practice    | are neat      |
-| When ALex    | are neat      |
+| Which sound option user wants to practice        | * option {1/2/3} |
+| | * {1/2/3}|
+| | * I want to practice option {1/2/3}| 
+| | * I want to practice {1/2/3}| 
+| Which practice type to focus on    | are neat      |
+| How many practice items to practice    | are neat      |
+| Practice the item    | {Repeat the practice item}      |
 | When ALex    | are neat      |
 | To ask Alexa to repeat alphabet/sound options         | centered      |
 | When ALex    | are neat      |
