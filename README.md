@@ -27,6 +27,10 @@ Using the above three mentioned properties, we create a session and walk the use
       <th align="center">Response accepted</th>
     </tr>
     <tr>
+      <td>Invocation/To open the alexa skill</td>
+      <td>Alexa open Speech Practice</td>
+    </tr>
+    <tr>
       <td>Which sound option user wants to practice</td>
       <td>
         <ul>
@@ -61,11 +65,7 @@ Using the above three mentioned properties, we create a session and walk the use
     </tr>
     <tr>
       <td>Practice the item</td>
-      <td>
-        <ul>
-          <li>{practice_item}</li>
-        </ul>
-      </td>
+      <td>{practice_item}</td>
     </tr>
     <tr>
       <td>
@@ -73,6 +73,7 @@ Using the above three mentioned properties, we create a session and walk the use
           <li>To start the session</li>
           <li>To move to the next practice item</li>
           <li>Skip practice item</li>
+          <li>To continue with practice after initial number of practice items are done</li>
         </ul>
       </td>
       <td>
@@ -93,6 +94,18 @@ Using the above three mentioned properties, we create a session and walk the use
           <li>What are my sound options</li>
           <li>Could you repeate the alphabet options</li>
           <li>Could you repeate the alphabet options</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>To quit the alexa skill</td>
+      <td>
+        <ul>
+          <li>Quit the session</li>
+          <li>Exit the session</li>
+          <li>I want to exit</li>
+          <li>Exit</li>
+          <li>I want to quit</li>
         </ul>
       </td>
     </tr>
