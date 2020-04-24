@@ -20,19 +20,6 @@ Using the above three mentioned properties, we create a session and walk the use
 
 ## User-device interaction
 
-| Alexa's question / Scenario           | Response accepted         |
-| ------------- |-------------|
-| Which sound option user wants to practice        | * option {1/2/3} |
-| | * {1/2/3}|
-| | * I want to practice option {1/2/3}| 
-| | * I want to practice {1/2/3}| 
-| Which practice type to focus on    | are neat      |
-| How many practice items to practice    | are neat      |
-| Practice the item    | {Repeat the practice item}      |
-| When ALex    | are neat      |
-| To ask Alexa to repeat alphabet/sound options         | centered      |
-| When ALex    | are neat      |
-
 <table>
   <tbody>
     <tr>
@@ -52,7 +39,15 @@ Using the above three mentioned properties, we create a session and walk the use
     </tr>
     <tr>
       <td>Which practice type to focus on</td>
-      <td align="center">right-aligned</td>
+      <td>
+        <ul>
+          <li>practice {words/phrases/sentences}</li>
+          <li>{words/phrases/sentences}</li>
+          <li>I want to practice {words/phrases/sentences}</li>
+          <li>Let's do {words/phrases/sentences}</li>
+          <li>I will work with {words/phrases/sentences}</li>
+        </ul>
+      </td>
     </tr>
     <tr>
       <td>How many practice items to practice</td>
@@ -60,7 +55,22 @@ Using the above three mentioned properties, we create a session and walk the use
     </tr>
     <tr>
       <td>Practice the item</td>
-      <td align="center">right-aligned</td>
+      <td>
+        <ul>
+          <li>{practice_item}</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>To ask Alexa to repeat alphabet/sound options</td>
+      <td>
+        <ul>
+          <li>Could you repeate the sound options</li>
+          <li>What are my sound options</li>
+          <li>Could you repeate the alphabet options</li>
+          <li>Could you repeate the alphabet options</li>
+        </ul>
+      </td>
     </tr>
     <tr>
       <td>col 2 is</td>
