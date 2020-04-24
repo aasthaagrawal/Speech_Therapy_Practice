@@ -20,7 +20,15 @@ Using the above three mentioned properties, we create a session and walk the use
 
 ## User-device interaction
 
-
+| Alexa question / Scenario           | Response accepted         |
+| : -------------: |-------------|
+| When Alexa asks about which sound option user wants to practice        | right-aligned |
+| When ALexa asks which practice type to focus on    | are neat      |
+| When ALexa asks how many practice items to practice    | are neat      |
+| When ALex    | are neat      |
+| When ALex    | are neat      |
+| To ask Alexa to repeat alphabet/sound options         | centered      |
+| When ALex    | are neat      |
 ## Future work
 * Support for persisting user profile across sessions
 * Intent chaining to make the user-device interaction after each practice item more smooth
